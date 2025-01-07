@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // URL de ton webhook PayPal
-const PAYPAL_WEBHOOK_URL = 'https://dino-server.com/notify';  // Remplace par l'URL publique de ton serveur
+const PAYPAL_WEBHOOK_URL = 'https://dino-server.onrender.com';  // Remplace par l'URL publique de ton serveur
 const PAYPAL_CLIENT_ID = 'AQQODoHs2y8AlgVc7mWpU5ofrXsErHGP4DI7rPSi_f84ByBYKj65ZfXtxm9MrAGp2RrOlnpWxDdrXpsS';  // Ton client ID PayPal
 const PAYPAL_SECRET = 'EHBTKuyLSzrJkEYCUdH4QCWLLQK_AZDGg3WotSHdLALXg0509mNHtJIK9IWjNmQ-xrKQUna0dHAzeT5l';  // Ton secret PayPal
 
