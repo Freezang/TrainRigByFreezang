@@ -1,4 +1,3 @@
-```lua
 -- Script de téléportation vers Door
 -- Cherche un modèle contenant "Door" dans workspace.Level et téléporte le joueur
 
@@ -79,4 +78,4 @@ end)
 
 
 print("Script de téléportation vers Door démarré - Boucle toutes les 5 secondes")
-startDoorLoop()```
+startDoorLoop()
