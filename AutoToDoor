@@ -1,0 +1,82 @@
+```lua
+-- Script de téléportation vers Door
+-- Cherche un modèle contenant "Door" dans workspace.Level et téléporte le joueur
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Fonction pour chercher un modèle contenant "Door"
+local function findDoorModel()
+    local level = workspace:FindFirstChild("Level")
+    if not level then
+        warn("Aucun dossier 'Level' trouvé dans workspace")
+        return nil
+    end
+    
+    -- Parcours tous les enfants de Level
+    for _, child in pairs(level:GetChildren()) do
+        if child:IsA("Model") then
+            -- Cherche "Door" dans le modèle
+            local door = child:FindFirstChild("Door")
+            if door then
+                return door
+            end
+            
+            -- Cherche récursivement dans les sous-modèles
+            for _, subChild in pairs(child:GetDescendants()) do
+                if subChild.Name == "Door" then
+                    return subChild
+                end
+            end
+        end
+    end
+    
+    return nil
+end
+
+-- Fonction pour téléporter vers la porte
+local function teleportToDoor()
+    local door = findDoorModel()
+    
+    if door then
+        -- Vérifier que le joueur a toujours un personnage
+        character = player.Character
+        if character then
+            humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                -- Téléporter vers la porte
+                local doorPosition = door.Position
+                humanoidRootPart.CFrame = CFrame.new(doorPosition + Vector3.new(0, 5, 0)) -- +5 en Y pour éviter de se coincer
+                print("Téléporté vers Door à la position:", doorPosition)
+            else
+                warn("HumanoidRootPart non trouvé")
+            end
+        else
+            warn("Personnage non trouvé")
+        end
+    else
+        warn("Aucune porte trouvée dans workspace.Level")
+    end
+end
+
+-- Boucle principale qui s'exécute toutes les 5 secondes
+local function startDoorLoop()
+    while true do
+        teleportToDoor()
+        wait(3) -- Attendre 5 secondes
+    end
+end
+
+-- Gérer la réapparition du personnage
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+end)
+
+
+print("Script de téléportation vers Door démarré - Boucle toutes les 5 secondes")
+startDoorLoop()```
